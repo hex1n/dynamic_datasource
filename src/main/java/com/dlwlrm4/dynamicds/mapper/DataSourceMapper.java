@@ -1,25 +1,29 @@
-package generator.mapper;
+package com.dlwlrm4.dynamicds.mapper;
 
-import generator.domain.DataSource;
+import com.dlwlrm4.dynamicds.entity.DataSourceEntity;
+
+import java.util.List;
 
 /**
 * @author hex1n
 * @description 针对表【data_source(数据源表)】的数据库操作Mapper
 * @createDate 2023-07-30 13:53:58
-* @Entity generator.domain.DataSource
+* @Entity com.dlwlrm4.dynamicds.entity.DataSourceEntity
 */
 public interface DataSourceMapper {
 
     int deleteByPrimaryKey(Long id);
 
-    int insert(DataSource record);
+    int insert(DataSourceEntity record);
 
-    int insertSelective(DataSource record);
+    int insertSelective(DataSourceEntity record);
 
-    DataSource selectByPrimaryKey(Long id);
+    DataSourceEntity selectByPrimaryKey(Long id);
 
-    int updateByPrimaryKeySelective(DataSource record);
+    int updateByPrimaryKeySelective(DataSourceEntity record);
 
-    int updateByPrimaryKey(DataSource record);
+    int updateByPrimaryKey(DataSourceEntity record);
+
+    List<DataSourceEntity> findAll();
 
 }

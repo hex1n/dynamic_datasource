@@ -1,4 +1,4 @@
-package com.dlwlrm4.dynamicds.service.impl;
+package com.dlwlrm4.dynamicds.service;
 
 import com.dlwlrm4.dynamicds.entity.DataSourceEntity;
 
@@ -14,4 +14,6 @@ public interface DsDynamicService {
     List<DataSourceEntity> findAll();
 
     Object switchDatabase(DataSourceEntity dataSourceEntity);
+
+    DataSourceEntity addDatabase(DataSourceEntity dataSourceEntity);
 }

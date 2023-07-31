@@ -1,5 +1,6 @@
-package com.dlwlrm4.dynamicds.service.impl;
+package com.dlwlrm4.dynamicds.service;
 
+import com.alibaba.fastjson.JSON;
 import com.dlwlrm4.dynamicds.config.DataSourceFactory;
 import com.dlwlrm4.dynamicds.entity.DataSourceEntity;
 import com.dlwlrm4.dynamicds.mapper.DataSourceMapper;
@@ -35,12 +36,22 @@ public class DsDynamicServiceImpl implements DsDynamicService {
 
     @Override
     public Object switchDatabase(DataSourceEntity dataSourceEntity) {
-        HikariDataSource dataSource = DataSourceFactory.matchDataSource(dataSourceEntity.getJdbcUrl(), dataSourceEntity.getDriverClassName(), dataSourceEntity.getUserName(),
-                dataSourceEntity.getPassword(), dataSourceEntity.getDatabaseName());
+        HikariDataSource dataSource = DataSourceFactory.matchDataSource(dataSourceEntity.getJdbcUrl(),
+                dataSourceEntity.getDriverClassName(), dataSourceEntity.getUserName(),
+                dataSourceEntity.getPassword(), dataSourceEntity.getDatabaseName(),
+                dataSourceEntity.getDatabaseType().name());
         jdbcTemplate.setDataSource(dataSource);
 
         List<Map<String, Object>> result = jdbcTemplate.queryForList("select  * from t_user");
+        log.info("result:{}", JSON.toJSONString(result));
         return result;
+    }
+
+    @Override
+    public DataSourceEntity addDatabase(DataSourceEntity dataSourceEntity) {
+        dataSourceMapper.insert(dataSourceEntity);
+        DataSourceFactory.loadDataSource(dataSourceMapper);
+        return dataSourceEntity;
     }
 
 

@@ -1,4 +1,4 @@
-package com.dlwlrm4.dynamicds;
+package com.dlwlrm4.dynamicds.constant;
 
 /**
  * @Author hex1n
