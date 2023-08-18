@@ -1,10 +1,10 @@
 package com.dlwlrm4.dynamicds.service;
 
+import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSON;
 import com.dlwlrm4.dynamicds.config.DataSourceFactory;
 import com.dlwlrm4.dynamicds.entity.DataSourceEntity;
 import com.dlwlrm4.dynamicds.mapper.DataSourceMapper;
-import com.zaxxer.hikari.HikariDataSource;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -36,12 +36,10 @@ public class DsDynamicServiceImpl implements DsDynamicService {
 
     @Override
     public Object switchDatabase(DataSourceEntity dataSourceEntity) {
-        HikariDataSource dataSource = DataSourceFactory.matchDataSource(dataSourceEntity.getJdbcUrl(),
+        DruidDataSource dataSource = DataSourceFactory.matchDataSource(dataSourceEntity.getJdbcUrl(),
                 dataSourceEntity.getDriverClassName(), dataSourceEntity.getUserName(),
-                dataSourceEntity.getPassword(), dataSourceEntity.getDatabaseName(),
-                dataSourceEntity.getDatabaseType().name());
+                dataSourceEntity.getPassword(), dataSourceEntity.getDatabaseType().name());
         jdbcTemplate.setDataSource(dataSource);
-
         List<Map<String, Object>> result = jdbcTemplate.queryForList("select  * from t_user");
         log.info("result:{}", JSON.toJSONString(result));
         return result;
