@@ -1,13 +1,10 @@
 package com.dlwlrm4.dynamicds.config;
 
-import com.dlwlrm4.dynamicds.entity.DataSourceEntity;
 import com.dlwlrm4.dynamicds.mapper.DataSourceMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.jdbc.DataSourceBuilder;
 import org.springframework.context.annotation.Configuration;
 
 import javax.annotation.PostConstruct;
-import javax.sql.DataSource;
 
 /**
  * @Author hex1n
@@ -23,7 +20,7 @@ public class DataSourceConfig {
 
     @PostConstruct
     public void initDataSourcePool() {
-       DataSourceFactory.loadDataSource(dataSourceMapper);
+        DataSourceFactory.loadDataSource(dataSourceMapper);
     }
 
 }
