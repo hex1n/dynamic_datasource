@@ -3,6 +3,7 @@ package com.dlwlrm4.dynamicds.service;
 import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.fastjson.JSON;
 import com.dlwlrm4.dynamicds.config.DataSourceFactory;
+import com.dlwlrm4.dynamicds.config.DynamicDataSourceConfig;
 import com.dlwlrm4.dynamicds.entity.DataSourceEntity;
 import com.dlwlrm4.dynamicds.mapper.DataSourceMapper;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +25,9 @@ public class DsDynamicServiceImpl implements DsDynamicService {
 
     @Autowired
     private DataSourceMapper dataSourceMapper;
+
+    @Autowired
+    private DynamicDataSourceConfig dataSourceConfig;
 
     @Autowired
     private JdbcTemplate jdbcTemplate;
@@ -50,6 +54,20 @@ public class DsDynamicServiceImpl implements DsDynamicService {
         dataSourceMapper.insert(dataSourceEntity);
         DataSourceFactory.loadDataSource(dataSourceMapper);
         return dataSourceEntity;
+    }
+
+    @Override
+    public DataSourceEntity addDatabase2(DataSourceEntity dataSourceEntity) {
+        dataSourceMapper.insert(dataSourceEntity);
+        dataSourceConfig.reload();
+        return dataSourceEntity;
+    }
+
+    @Override
+    public Object switchDatabase2(DataSourceEntity dataSource) {
+        List<Map<String, Object>> result = jdbcTemplate.queryForList("select  * from t_user");
+        log.info("result:{}", JSON.toJSONString(result));
+        return result;
     }
 
 

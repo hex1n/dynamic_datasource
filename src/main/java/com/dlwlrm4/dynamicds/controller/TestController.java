@@ -3,9 +3,7 @@ package com.dlwlrm4.dynamicds.controller;
 import com.dlwlrm4.dynamicds.entity.DataSourceEntity;
 import com.dlwlrm4.dynamicds.service.DsDynamicService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
 import java.util.List;
@@ -58,6 +56,32 @@ public class TestController {
         dataSourceEntity.setUpdateTime(new Date());
 
         return  dsDynamicService.addDatabase(dataSourceEntity);
+
+    }
+
+    @PostMapping("/switchDatabase2")
+    public Object switchDatabase2(@RequestBody DataSourceEntity dataSource) {
+        return dsDynamicService.switchDatabase2(dataSource);
+    }
+
+    @PostMapping("/addDatabase2")
+    public DataSourceEntity addDatabase2() {
+        DataSourceEntity dataSourceEntity = new DataSourceEntity();
+        List<DataSourceEntity> all = dsDynamicService.findAll();
+        dataSourceEntity.setId(String.valueOf(System.nanoTime()));
+        DataSourceEntity dataSource = all.get(1);
+        dataSourceEntity.setJdbcUrl("jdbc:mysql://localhost:3306/assistant");
+        dataSourceEntity.setDatabaseType(dataSource.getDatabaseType());
+        dataSourceEntity.setUserName(dataSource.getUserName());
+        dataSourceEntity.setPassword(dataSource.getPassword());
+        dataSourceEntity.setDriverClassName(dataSource.getDriverClassName());
+        dataSourceEntity.setDatabaseName("assistant");
+        dataSourceEntity.setCreateBy(dataSource.getCreateBy());
+        dataSourceEntity.setUpdateBy(dataSource.getUpdateBy());
+        dataSourceEntity.setCreateTime(new Date());
+        dataSourceEntity.setUpdateTime(new Date());
+
+        return  dsDynamicService.addDatabase2(dataSourceEntity);
 
     }
 

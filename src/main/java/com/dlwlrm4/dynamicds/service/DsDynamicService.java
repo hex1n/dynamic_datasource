@@ -16,4 +16,8 @@ public interface DsDynamicService {
     Object switchDatabase(DataSourceEntity dataSourceEntity);
 
     DataSourceEntity addDatabase(DataSourceEntity dataSourceEntity);
+
+    DataSourceEntity addDatabase2(DataSourceEntity dataSourceEntity);
+
+    Object switchDatabase2(DataSourceEntity dataSource);
 }
